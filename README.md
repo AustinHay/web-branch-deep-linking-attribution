@@ -1193,3 +1193,92 @@ ___
 
 Feel free to report any bugs you might encounter in the repo's issues. Any support inquiries outside of bugs
 please send to [support@branch.io](mailto:support@branch.io).
+
+## mParticle - Branch Listeners
+```
+<script>
+    // Branch listener with mParticle & Adobe Event logging.
+    var listener = function(event, data) {
+        // Rename listener events to our own custom event names.
+        if (event == 'didShowBanner') {
+            event = 'Banner Shown';
+        } else if (event == 'didCloseBanner') {
+            event = 'Banner Close'
+        } else if (event == 'willSendBannerSMS') {
+            event = 'Banner SMS Phone Number Successful'
+        } else if (event == 'sendBannerSMSError') {
+            event = 'Banner SMS Error'
+        } else if (event == 'didSendBannerSMS') {
+            event = 'Banner SMS Sent'
+        } else if (event == 'didDownloadApp') {
+            event = 'Branch Web - App Cookie Updated'
+        } else if (event == 'willShowJourney') {
+            event = 'Branch Journeys - Will Show Journey'
+        } else if (event == 'didShowJourney') {
+            event = 'Branch Journeys - Journey Impression'
+        } else if (event == 'willNotShowJourney') {
+            event = 'Branch Journeys - Will Not Show Journey'
+        } else if (event == 'didClickJourneyCTA') {
+            event = 'Branch Journeys - Journey CTA Click'
+        } else if (event == 'didClickJourneyClose') {
+            event = 'Branch Journeys - Journey Close button Click'
+        } else if (event == 'willCloseJourney') {
+            event = 'Branch Journeys - Journey Close Pending'
+        } else if (event == 'didCloseJourney') {
+            event = 'Branch Journeys - Journey Closed'
+        } else if (event == 'didCallJourneyClose') {
+            event = 'Branch Journeys - Programmatic Journey Close'
+        };
+
+        // Log event to mParticle.
+        console.log(event)
+        console.log(data)
+        window.mParticle.logEvent(event, mParticle.EventType.Navigation, data);
+    };
+
+// // Listen for Link Creation - Put this method in the `link` callback for branch.link() creation.
+// listener('Branch Link Created', link);
+
+// Listen for Banner Impression
+branch.addListener('didShowBanner', listener);
+
+// Listen for Banner Close
+branch.addListener('didCloseBanner', listener);
+
+// Listen for SMS Send Attempt
+branch.addListener('willSendBannerSMS', listener);
+// Listen for SMS Error
+branch.addListener('sendBannerSMSError', listener);
+// Listen for SMS Send
+branch.addListener('didSendBannerSMS', listener);
+
+// Listen for Branch Web - App Cookie refresh
+branch.addListener('didDownloadApp', listener);
+
+// Journeys Listeners
+
+// Listen for when the Journey is about to be shown.
+branch.addListener('willShowJourney', listener);
+
+// Listen for when the Journey's entrance animation has completed and it is being shown to the user.
+branch.addListener('didShowJourney', listener);
+
+// Listen for when the Journey will not be shown and no other events will be emitted.
+branch.addListener('willNotShowJourney', listener);
+
+// Listen for when the User clicked on Journey's CTA button.
+branch.addListener('didClickJourneyCTA', listener);
+
+// Listen for when the User clicked on Journey's close button.
+branch.addListener('didClickJourneyClose', listener);
+
+// Listen for when the Journey close animation has started.
+branch.addListener('willCloseJourney', listener);
+
+// Listen for when the Journey's close animation has completed and it is no longer visible to the user.
+branch.addListener('didCloseJourney', listener);
+
+// Listen for when the Emitted when developer calls branch.closeJourney() to dismiss Journey.
+branch.addListener('didCallJourneyClose', listener);
+</script>
+```
