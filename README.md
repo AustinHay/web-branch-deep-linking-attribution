@@ -1195,7 +1195,7 @@ Feel free to report any bugs you might encounter in the repo's issues. Any suppo
 please send to [support@branch.io](mailto:support@branch.io).
 
 ## mParticle - Branch Listeners
-```
+```js
 <script>
     // Branch listener with mParticle & Adobe Event logging.
     var listener = function(event, data) {
